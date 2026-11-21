@@ -6,7 +6,7 @@ LC32_HOST_TEST_GOALS := check-jit-code-memory-mode check-float-structs check-gue
   check-foundation-ports-host check-uikit-compatibility-switch check-uikit-status-bar-orientation \
   check-guest-install check-host-selector-hooks check-uikit-screen-metrics-host \
   check-systemconfiguration-host check-coremedia-sample-buffers-host check-uikit-status-bar-host \
-  check-uikit-classic-presentation
+  check-uikit-classic-presentation check-legacy-resource-path
 LC32_HOST_ONLY_BUILD := $(if $(strip $(MAKECMDGOALS)),\
   $(if $(strip $(filter-out $(LC32_HOST_TEST_GOALS),$(MAKECMDGOALS))),,1),)
 
@@ -44,6 +44,16 @@ BUILD_INFO_LOGGING_HOST_TESTS := $(addprefix $(HOST_TEST_OUTPUT_DIR)/build-info-
 .PHONY: check-uikit-classic-presentation
 check-uikit-classic-presentation:
 	sh ./uikit_classic_presentation_host.sh
+
+.PHONY: check-legacy-resource-path
+check-legacy-resource-path:
+	@mkdir -p "$(HOST_TEST_OUTPUT_DIR)"
+	$(HOST_CXX) $(HOST_CXXFLAGS) -fobjc-arc -framework Foundation \
+		legacy_resource_path_host.mm \
+		../HostFrameworks/Foundation/LegacyResourcePath.mm \
+		../HostFrameworks/LC32/guest_bootstrap.cpp \
+		-o "$(HOST_TEST_OUTPUT_DIR)/legacy-resource-path-host"
+	"$(HOST_TEST_OUTPUT_DIR)/legacy-resource-path-host"
 
 check-float-structs:
 	@mkdir -p "$(HOST_TEST_OUTPUT_DIR)"
