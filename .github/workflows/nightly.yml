@@ -2,7 +2,7 @@ name: Build LiveExec32
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main, dev, fix/rhythmmaster-resource-path]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -74,6 +74,9 @@ jobs:
           "$pzb_root/buildroot_macos-latest/usr/local/bin/pzb" \
           "$tools_dir/pzb"
         echo "$tools_dir" >> "$GITHUB_PATH"
+
+    - name: Check legacy resource paths and guest bootstrap
+      run: gmake -C test check-legacy-resource-path check-guest-bootstrap
 
     - name: Generate guest shims
       run: gmake -C GuestMakefile generate-shims
