@@ -68,6 +68,7 @@ LiveExec32Shared_FILES = \
 	dynarmic_core.cpp filesystem.cpp variables.cpp ap_getparents.c target.c \
 	bridge.mm host_selector_hooks.mm block_bridge.mm bridge.s log.m \
 	../Foundation/Foundation.mm ../Foundation/NSString.mm ../Foundation/MachPort.mm \
+	../Foundation/LegacyResourcePath.mm \
 	../Foundation/NSInvocation.mm ../Foundation/ObjectCallbacks.mm \
 	../CoreFoundation/CoreFoundation.mm ../CFNetwork/CFNetwork.mm \
 	../Security/Security.mm ../CoreGraphics/CoreGraphics.mm \

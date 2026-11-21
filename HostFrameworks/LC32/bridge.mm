@@ -6,6 +6,7 @@
 #include "LC32PODType.h"
 #include "LC32DebugLog.h"
 #import "host_selector_hooks.h"
+#include "../Foundation/LegacyResourcePath.h"
 
 #import <dispatch/dispatch.h>
 #import <mach/mach_init.h>
@@ -2325,7 +2326,9 @@ inline id LC32GetHostConstString(u32 guest_self) {
      */
     constStr[2] = (u64)host_str.hostPtrForGuest() &
         ~DynarmicHostString_NEED_FREE;
-    constStr[3] = length;
+    constStr[3] = LC32LegacyResourcePathConstantLength(
+        static_cast<u32>(constStr[1]), host_str.hostPtr,
+        static_cast<size_t>(length), getenv("LC32_GUEST_EXECUTABLE"));
     return (id)constStr;
 }
 
